@@ -2,9 +2,9 @@ import React from 'react';
 
 import { Container, Navbar, Nav } from 'react-bootstrap';
 
-const Header: React.FunctionComponent = () => (
+const Header: React.FC = () => (
   <header>
-    <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
+    <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect>
       <Container>
         <Navbar.Brand href="/">Book Store</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

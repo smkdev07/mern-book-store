@@ -9,8 +9,4 @@ describe('<Header />', () => {
     const header = wrapper.find('header');
     expect(header).toHaveLength(1);
   });
-
-  it('renders nav elements to / : /cart : /login', () => {
-    const wrapper = shallow(<Header />);
-  })
 });
