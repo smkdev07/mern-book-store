@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Container, Navbar, Nav } from 'react-bootstrap';
+import { FaShoppingCart, FaUser } from 'react-icons/fa';
 
 const Header: React.FC = () => (
   <header>
@@ -11,10 +12,10 @@ const Header: React.FC = () => (
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
             <Nav.Link href="/cart">
-              <i className="fas fa-shopping-cart" /> Cart
+              <FaShoppingCart className="pb-1" size="1.25rem" /> Cart
             </Nav.Link>
             <Nav.Link href="/login">
-              <i className="fas fa-user" /> Sign In
+              <FaUser className="pb-1" size="1.25rem" /> Sign In
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
