@@ -1,18 +1,24 @@
 import React from 'react';
 
-import Product from '../../components/Product/Product';
+import Book from '../../components/Book/Book';
 
 import { Row, Col } from 'react-bootstrap';
 
-import products from '../../products';
+import books from '../../books';
 
 const HomeScreen: React.FC = () => (
   <>
-    <h1>Latest Products</h1>
+    <h1>Latest Books</h1>
     <Row>
-      {products.map((product) => (
-        <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-          <Product product={product} />
+      {books.map((book) => (
+        <Col
+          key={book._id}
+          sm={12}
+          md={6}
+          lg={4}
+          xl={3}
+          style={{ marginBottom: '1.5rem' }}>
+          <Book book={book} />
         </Col>
       ))}
     </Row>

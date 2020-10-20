@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa';
 
-interface RatingProps {
+export interface RatingProps {
   value: number;
   text: string;
   maxValue?: number;

@@ -9,4 +9,9 @@ describe('<Footer />', () => {
     const footer = wrapper.find('footer');
     expect(footer).toHaveLength(1);
   });
+
+  it('renders the <Footer /> component', () => {
+    const wrapper = shallow(<Footer />);
+    expect(wrapper).toMatchSnapshot();
+  });
 });

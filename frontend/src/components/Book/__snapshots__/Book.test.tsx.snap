@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Book /> renders the <Book /> component 1`] = `ShallowWrapper {}`;

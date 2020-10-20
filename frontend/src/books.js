@@ -69,20 +69,6 @@ const books = [
     rating: 3.5,
     numReviews: 10,
   },
-  {
-    _id: '6',
-    name: 'JavaScript: The Definitive Guide',
-    image: '/images/JavaScript: The Definitive Guide.jpg',
-    description:
-      'JavaScript is the programming language of the web and is used by more software developers today than any other programming language.',
-    authors: 'David Flanagan',
-    publishers: "O'Reilly Media",
-    isbn: 9781491952023,
-    price: 39.99,
-    countInStock: 0,
-    rating: 4,
-    numReviews: 12,
-  },
 ];
 
 export default books;
