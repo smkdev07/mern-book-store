@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
+import axios from 'axios';
+
 import Rating from '../../components/Rating/Rating';
+import { Book } from '../../components/Book/Book';
 
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
-
-import books from '../../books';
 
 interface MatchParams {
   id: string;
@@ -13,8 +14,32 @@ interface MatchParams {
 
 interface BookScreenProps extends RouteComponentProps<MatchParams> {}
 
+const EMPTY_BOOK_STATE = {
+  _id: '',
+  name: '',
+  image: '',
+  description: '',
+  authors: '',
+  publishers: '',
+  isbn: 0,
+  price: 0,
+  countInStock: 0,
+  rating: 0,
+  numReviews: 0,
+};
+
 const BookScreen: React.FC<BookScreenProps> = ({ match }) => {
-  const book = books.find((book) => book._id === match.params.id)!;
+  const [book, setBook] = useState<Book>(EMPTY_BOOK_STATE);
+
+  useEffect(() => {
+    const fetchBook = async () => {
+      const { data } = await axios.get(`/api/books/${match.params.id}`);
+
+      setBook(data);
+    };
+
+    fetchBook();
+  }, [match]);
 
   return (
     <>
