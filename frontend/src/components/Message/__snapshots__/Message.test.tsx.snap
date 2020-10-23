@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Message /> renders the <Message /> component with default variant 1`] = `ShallowWrapper {}`;
+
+exports[`<Message /> renders the <Message /> component with variant from props 1`] = `ShallowWrapper {}`;
