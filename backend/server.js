@@ -5,6 +5,7 @@ import colors from 'colors';
 import connectDB from './config/db.js';
 
 import bookRoutes from './routes/books.js';
+import userRoutes from './routes/users.js';
 import { notFound, errorHandler } from './middleware/error.js';
 
 dotenv.config();
@@ -13,11 +14,15 @@ connectDB();
 
 const app = express();
 
+app.use(express.json());
+
 app.get('/', (req, res, next) => {
   res.send('API is running...');
 });
 
 app.use('/api/books', bookRoutes);
+
+app.use('/api/users', userRoutes);
 
 app.use(notFound);
 
