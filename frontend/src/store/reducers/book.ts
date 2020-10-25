@@ -7,21 +7,44 @@ import {
 } from '../actions/book-action-types';
 
 export interface BookState {
-  readonly book: Book | null;
+  readonly book: Book;
   readonly loading: boolean;
   readonly error: string | null;
 }
 
-const initialState: BookState = { book: null, loading: false, error: null };
+const emptyBook: Book = {
+  _id: '',
+  __v: 0,
+  user: '',
+  name: '',
+  image: '',
+  description: '',
+  authors: '',
+  publishers: '',
+  isbn: 0,
+  price: 0,
+  countInStock: 0,
+  reviews: [],
+  rating: 0,
+  numReviews: 0,
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};
+
+const initialState: BookState = {
+  book: emptyBook,
+  loading: false,
+  error: null,
+};
 
 const book = (state = initialState, action: BookActionTypes) => {
   switch (action.type) {
     case REQUEST_BOOK:
-      return { book: null, loading: true, error: null };
+      return { book: emptyBook, loading: true, error: null };
     case REQUEST_BOOK_SUCCESS:
       return { book: action.payload.book, loading: false, error: null };
     case REQUEST_BOOK_FAILURE:
-      return { book: null, loading: false, error: action.payload.message };
+      return { book: emptyBook, loading: false, error: action.payload.message };
     default:
       return state;
   }
