@@ -21,8 +21,8 @@ const mockReturnedBooks = [
     reviews: [],
     rating: 4,
     numReviews: 0,
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
 ];
 

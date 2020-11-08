@@ -2,6 +2,10 @@ import cartReducer from './cart';
 import {
   ADD_ITEM_TO_CART,
   REMOVE_ITEM_FROM_CART,
+  SAVE_SHIPPING_ADDRESS,
+  SAVE_PAYMENT_METHOD,
+  CLEAR_CART_ITEMS,
+  RESET_CART,
 } from '../actions/cart-action-types';
 
 const mockCartItemOne = {
@@ -22,31 +26,60 @@ const mockCartItemTwo = {
   quantity: 2,
 };
 
+const mockShippingAddress = {
+  address: 'test',
+  city: 'test',
+  postalCode: 'test',
+  country: 'test',
+};
+
+const mockPaymentMethod = 'test';
+
 describe('cart reducer', () => {
   it('returns updated cart state for action type ADD_ITEM_TO_CART with new item and empty cart', () => {
-    const initialCartState = { cartItems: [] };
+    const initialCartState = {
+      cartItems: [],
+      shippingAddress: null,
+      paymentMethod: null,
+    };
     const updatedCartState = cartReducer(initialCartState, {
       type: ADD_ITEM_TO_CART,
       payload: { item: mockCartItemOne },
     });
-    const expectedCartState = { cartItems: [mockCartItemOne] };
+    const expectedCartState = {
+      cartItems: [mockCartItemOne],
+      shippingAddress: null,
+      paymentMethod: null,
+    };
 
     expect(updatedCartState).toEqual(expectedCartState);
   });
 
   it('returns updated cart state for action type ADD_ITEM_TO_CART with new item and existing cart', () => {
-    const initialCartState = { cartItems: [mockCartItemOne] };
+    const initialCartState = {
+      cartItems: [mockCartItemOne],
+      shippingAddress: null,
+      paymentMethod: null,
+    };
     const updatedCartState = cartReducer(initialCartState, {
       type: ADD_ITEM_TO_CART,
       payload: { item: mockCartItemTwo },
     });
-    const expectedCartState = { cartItems: [mockCartItemOne, mockCartItemTwo] };
+    const expectedCartState = {
+      cartItems: [mockCartItemOne, mockCartItemTwo],
+      shippingAddress: null,
+      paymentMethod: null,
+    };
 
     expect(updatedCartState).toEqual(expectedCartState);
   });
 
   it('returns updated cart state for action type ADD_ITEM_TO_CART with existing cart item', () => {
-    const initialCartState = { cartItems: [mockCartItemOne] };
+    const initialCartState = {
+      cartItems: [mockCartItemOne],
+      shippingAddress: null,
+      paymentMethod: null,
+    };
     const updatedCartState = cartReducer(initialCartState, {
       type: ADD_ITEM_TO_CART,
       payload: { item: { ...mockCartItemOne, quantity: 2 } },
@@ -60,23 +93,113 @@ describe('cart reducer', () => {
   });
 
   it('returns updated cart state for action type REMOVE_ITEM_FROM_CART with one cart item', () => {
-    const initialCartState = { cartItems: [mockCartItemOne] };
+    const initialCartState = {
+      cartItems: [mockCartItemOne],
+      shippingAddress: null,
+      paymentMethod: null,
+    };
     const updatedCartState = cartReducer(initialCartState, {
       type: REMOVE_ITEM_FROM_CART,
       payload: { itemId: 'one' },
     });
-    const expectedCartState = { cartItems: [] };
+    const expectedCartState = {
+      cartItems: [],
+      shippingAddress: null,
+      paymentMethod: null,
+    };
 
     expect(updatedCartState).toEqual(expectedCartState);
   });
 
   it('returns updated cart state for action type REMOVE_ITEM_FROM_CART with many cart items', () => {
-    const initialCartState = { cartItems: [mockCartItemOne, mockCartItemTwo] };
+    const initialCartState = {
+      cartItems: [mockCartItemOne, mockCartItemTwo],
+      shippingAddress: null,
+      paymentMethod: null,
+    };
     const updatedCartState = cartReducer(initialCartState, {
       type: REMOVE_ITEM_FROM_CART,
       payload: { itemId: 'one' },
     });
-    const expectedCartState = { cartItems: [mockCartItemTwo] };
+    const expectedCartState = {
+      cartItems: [mockCartItemTwo],
+      shippingAddress: null,
+      paymentMethod: null,
+    };
+
+    expect(updatedCartState).toEqual(expectedCartState);
+  });
+
+  it('returns updated cart state for action type SAVE_SHIPPING_ADDRESS', () => {
+    const initialCartState = {
+      cartItems: [],
+      shippingAddress: null,
+      paymentMethod: null,
+    };
+    const updatedCartState = cartReducer(initialCartState, {
+      type: SAVE_SHIPPING_ADDRESS,
+      payload: { shippingAddress: mockShippingAddress },
+    });
+    const expectedCartState = {
+      cartItems: [],
+      shippingAddress: mockShippingAddress,
+      paymentMethod: null,
+    };
+
+    expect(updatedCartState).toEqual(expectedCartState);
+  });
+
+  it('returns updated cart state for action type SAVE_PAYMENT_METHOD', () => {
+    const initialCartState = {
+      cartItems: [],
+      shippingAddress: null,
+      paymentMethod: null,
+    };
+    const updatedCartState = cartReducer(initialCartState, {
+      type: SAVE_PAYMENT_METHOD,
+      payload: { paymentMethod: mockPaymentMethod },
+    });
+    const expectedCartState = {
+      cartItems: [],
+      shippingAddress: null,
+      paymentMethod: mockPaymentMethod,
+    };
+
+    expect(updatedCartState).toEqual(expectedCartState);
+  });
+
+  it('returns updated cart state for action type CLEAR_CART_ITEMS', () => {
+    const initialCartState = {
+      cartItems: [mockCartItemOne, mockCartItemTwo],
+      shippingAddress: mockShippingAddress,
+      paymentMethod: mockPaymentMethod,
+    };
+    const updatedCartState = cartReducer(initialCartState, {
+      type: CLEAR_CART_ITEMS,
+    });
+    const expectedCartState = {
+      cartItems: [],
+      shippingAddress: mockShippingAddress,
+      paymentMethod: mockPaymentMethod,
+    };
+
+    expect(updatedCartState).toEqual(expectedCartState);
+  });
+
+  it('returns updated cart state for action type RESET_CART', () => {
+    const initialCartState = {
+      cartItems: [mockCartItemOne, mockCartItemTwo],
+      shippingAddress: mockShippingAddress,
+      paymentMethod: mockPaymentMethod,
+    };
+    const updatedCartState = cartReducer(initialCartState, {
+      type: RESET_CART,
+    });
+    const expectedCartState = {
+      cartItems: [],
+      shippingAddress: null,
+      paymentMethod: null,
+    };
 
     expect(updatedCartState).toEqual(expectedCartState);
   });

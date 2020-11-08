@@ -16,6 +16,9 @@ import {
   REQUEST_USER_PROFILE_SUCCESS,
   REQUEST_USER_PROFILE_FAILURE,
 } from './user-action-types';
+import { RESET_CART } from './cart-action-types';
+import { RESET_ORDER } from './order-action-types';
+import { RESET_ORDERS } from './orders-action-types';
 
 export const signIn = (
   email: string,
@@ -54,7 +57,13 @@ export const signOut = (): ThunkAction<
   Action<string>
 > => async (dispatch) => {
   dispatch({ type: USER_SIGNOUT });
+  dispatch({ type: RESET_CART });
+  dispatch({ type: RESET_ORDER });
+  dispatch({ type: RESET_ORDERS });
   localStorage.removeItem('user');
+  localStorage.removeItem('cartItems');
+  localStorage.removeItem('shippingAddress');
+  localStorage.removeItem('paymentMethod');
 };
 
 export const signUp = (

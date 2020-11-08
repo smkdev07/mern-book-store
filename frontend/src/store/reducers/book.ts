@@ -27,8 +27,8 @@ const emptyBook: Book = {
   reviews: [],
   rating: 0,
   numReviews: 0,
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: '',
+  updatedAt: '',
 };
 
 const initialState: BookState = {

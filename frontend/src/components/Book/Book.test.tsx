@@ -3,7 +3,8 @@ import { shallow } from 'enzyme';
 
 import Book from './Book';
 
-const TEST_BOOK = {
+// Original Model
+/* const TEST_BOOK = {
   _id: '4',
   name: 'Software Engineering at Google',
   image: '/images/Software Engineering at Google.jpg',
@@ -16,6 +17,27 @@ const TEST_BOOK = {
   countInStock: 11,
   rating: 5,
   numReviews: 12,
+}; */
+
+// Updated Model
+const TEST_BOOK = {
+  _id: '4',
+  __v: 0,
+  user: 'Test User',
+  name: 'Software Engineering at Google',
+  image: '/images/Software Engineering at Google.jpg',
+  description:
+    'Today, software engineers need to know not only how to program effectively but also how to develop proper engineering practices to make their codebase sustainable and healthy. This book emphasizes this difference between programming and software engineering.',
+  authors: 'Titus Winters, Tom Manshreck, Hyrum Wright',
+  publishers: "O'Reilly Media",
+  isbn: 9781492082798,
+  price: 79.99,
+  countInStock: 11,
+  reviews: [],
+  rating: 5,
+  numReviews: 12,
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
 };
 
 const setup = () => {

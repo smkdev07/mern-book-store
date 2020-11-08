@@ -33,15 +33,15 @@ const CartScreen: React.FC<CartScreenProps> = ({
   const quantity = location.search ? +location.search.split('=')[1] : 1;
 
   const dispatch = useDispatch();
-  const cart = useSelector((state: RootState) => state.cart);
-  const { cartItems } = cart;
+  const cartState = useSelector((state: RootState) => state.cart);
+  const { cartItems } = cartState;
 
   const removeFromCartHandler = (itemId: string) => {
     dispatch(removeFromCart(itemId));
   };
 
   const checkoutHandler = () => {
-    history.push('/login?redirect=shipping');
+    history.push('/signin?redirect=shipping');
   };
 
   useEffect(() => {

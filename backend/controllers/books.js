@@ -21,6 +21,6 @@ export const getBookById = asyncHandler(async (req, res, next) => {
     res.json(book);
   } else {
     res.status(404);
-    throw new Error('Book not found!');
+    throw new Error('Book not found');
   }
 });

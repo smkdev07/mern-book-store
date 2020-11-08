@@ -5,6 +5,10 @@ import Header from './components/Header/Header';
 import HomeScreen from './screens/HomeScreen/HomeScreen';
 import BookScreen from './screens/BookScreen/BookScreen';
 import CartScreen from './screens/CartScreen/CartScreen';
+import ShippingScreen from './screens/ShippingScreen/ShippingScreen';
+import PaymentScreen from './screens/PaymentScreen/PaymentScreen';
+import PlaceOrderScreen from './screens/PlaceOrderScreen/PlaceOrderScreen';
+import OrderScreen from './screens/OrderScreen/OrderScreen';
 import SignInScreen from './screens/SignInScreen/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen/SignUpScreen';
 import UserProfileScreen from './screens/UserProfileScreen/UserProfileScreen';
@@ -20,6 +24,10 @@ const App: React.FC = () => (
       <Container>
         <Route path="/book/:id" component={BookScreen} />
         <Route path="/cart/:id?" component={CartScreen} />
+        <Route path="/shipping" component={ShippingScreen} />
+        <Route path="/payment" component={PaymentScreen} />
+        <Route path="/placeorder" component={PlaceOrderScreen} />
+        <Route path="/order/:id" component={OrderScreen} />
         <Route path="/signin" component={SignInScreen} />
         <Route path="/signup" component={SignUpScreen} />
         <Route path="/userprofile" component={UserProfileScreen} />

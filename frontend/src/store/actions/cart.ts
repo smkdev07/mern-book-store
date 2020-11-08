@@ -3,7 +3,13 @@ import { ThunkAction } from 'redux-thunk';
 import axios from 'axios';
 
 import { RootState } from '../store';
-import { ADD_ITEM_TO_CART, REMOVE_ITEM_FROM_CART } from './cart-action-types';
+import {
+  ADD_ITEM_TO_CART,
+  REMOVE_ITEM_FROM_CART,
+  SAVE_SHIPPING_ADDRESS,
+  SAVE_PAYMENT_METHOD,
+} from './cart-action-types';
+import { ShippingAddress } from '../reducers/cart';
 
 export const addToCart = (
   id: string,
@@ -41,4 +47,24 @@ export const removeFromCart = (
   dispatch({ type: REMOVE_ITEM_FROM_CART, payload: { itemId: id } });
 
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
+};
+
+export const saveShippingAddress = (
+  shippingAddress: ShippingAddress
+): ThunkAction<void, RootState, unknown, Action<string>> => async (
+  dispatch
+) => {
+  dispatch({ type: SAVE_SHIPPING_ADDRESS, payload: { shippingAddress } });
+
+  localStorage.setItem('shippingAddress', JSON.stringify(shippingAddress));
+};
+
+export const savePaymentMethod = (
+  paymentMethod: string
+): ThunkAction<void, RootState, unknown, Action<string>> => async (
+  dispatch
+) => {
+  dispatch({ type: SAVE_PAYMENT_METHOD, payload: { paymentMethod } });
+
+  localStorage.setItem('paymentMethod', JSON.stringify(paymentMethod));
 };

@@ -6,6 +6,7 @@ import connectDB from './config/db.js';
 
 import bookRoutes from './routes/books.js';
 import userRoutes from './routes/users.js';
+import orderRoutes from './routes/orders.js';
 import { notFound, errorHandler } from './middleware/error.js';
 
 dotenv.config();
@@ -23,6 +24,13 @@ app.get('/', (req, res, next) => {
 app.use('/api/books', bookRoutes);
 
 app.use('/api/users', userRoutes);
+
+app.use('/api/orders', orderRoutes);
+
+// Move route to seperate file
+app.get('/api/config/paypal', (req, res, next) =>
+  res.send(process.env.PAYPAL_CLIENT_ID)
+);
 
 app.use(notFound);
 

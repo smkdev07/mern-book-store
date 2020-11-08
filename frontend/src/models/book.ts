@@ -3,8 +3,8 @@ export interface Review {
   name: string;
   rating: string;
   comment: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Book {
@@ -22,6 +22,6 @@ export interface Book {
   reviews: Review[];
   rating: number;
   numReviews: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
