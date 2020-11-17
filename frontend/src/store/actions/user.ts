@@ -19,6 +19,7 @@ import {
 import { RESET_CART } from './cart-action-types';
 import { RESET_ORDER } from './order-action-types';
 import { RESET_ORDERS } from './orders-action-types';
+import { RESET_ADMIN } from './admin-action-types';
 
 export const signIn = (
   email: string,
@@ -60,6 +61,7 @@ export const signOut = (): ThunkAction<
   dispatch({ type: RESET_CART });
   dispatch({ type: RESET_ORDER });
   dispatch({ type: RESET_ORDERS });
+  dispatch({ type: RESET_ADMIN });
   localStorage.removeItem('user');
   localStorage.removeItem('cartItems');
   localStorage.removeItem('shippingAddress');

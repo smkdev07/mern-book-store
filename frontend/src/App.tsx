@@ -12,6 +12,8 @@ import OrderScreen from './screens/OrderScreen/OrderScreen';
 import SignInScreen from './screens/SignInScreen/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen/SignUpScreen';
 import UserProfileScreen from './screens/UserProfileScreen/UserProfileScreen';
+import UsersScreen from './screens/UsersScreen/UsersScreen';
+import UserScreen from './screens/UserScreen/UserScreen';
 import Footer from './components/Footer/Footer';
 
 import { Container } from 'react-bootstrap';
@@ -31,6 +33,8 @@ const App: React.FC = () => (
         <Route path="/signin" component={SignInScreen} />
         <Route path="/signup" component={SignUpScreen} />
         <Route path="/userprofile" component={UserProfileScreen} />
+        <Route path="/admin/users" component={UsersScreen} />
+        <Route path="/admin/user/:id" component={UserScreen} />
         <Route path="/" component={HomeScreen} exact />
       </Container>
     </main>

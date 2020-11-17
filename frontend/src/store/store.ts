@@ -6,6 +6,7 @@ import books from './reducers/books';
 import book from './reducers/book';
 import cart from './reducers/cart';
 import user from './reducers/user';
+import admin from './reducers/admin';
 import order from './reducers/order';
 import orders from './reducers/orders';
 
@@ -14,33 +15,31 @@ const rootReducer = combineReducers({
   book,
   cart,
   user,
+  admin,
   order,
   orders,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
 
-// This can be refactored into a loop // function
+const getInitialStateFromLocalStorage = (
+  localStorageKey: string,
+  fallbackValue: any
+) => {
+  const localStorageValue = localStorage.getItem(localStorageKey);
+  return localStorageValue ? JSON.parse(localStorageValue) : fallbackValue;
+};
 
-const cartItemsFromLocalStorage = localStorage.getItem('cartItems');
-const initialCartItems = cartItemsFromLocalStorage
-  ? JSON.parse(cartItemsFromLocalStorage)
-  : [];
-
-const userFromLocalStorage = localStorage.getItem('user');
-const initialUser = userFromLocalStorage
-  ? JSON.parse(userFromLocalStorage)
-  : null;
-
-const shippingAddressFromLocalStorage = localStorage.getItem('shippingAddress');
-const initialShippingAddress = shippingAddressFromLocalStorage
-  ? JSON.parse(shippingAddressFromLocalStorage)
-  : null;
-
-const paymentMethodFromLocalStorage = localStorage.getItem('paymentMethod');
-const initialPaymentMethod = paymentMethodFromLocalStorage
-  ? JSON.parse(paymentMethodFromLocalStorage)
-  : null;
+const initialCartItems = getInitialStateFromLocalStorage('cartItems', []);
+const initialUser = getInitialStateFromLocalStorage('user', null);
+const initialShippingAddress = getInitialStateFromLocalStorage(
+  'shippingAddress',
+  null
+);
+const initialPaymentMethod = getInitialStateFromLocalStorage(
+  'paymentMethod',
+  null
+);
 
 const initialState = {
   cart: {
