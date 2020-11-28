@@ -4,40 +4,34 @@ import { RouteComponentProps } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import { fetchUsers, deleteUser } from '../../store/actions/admin';
+import { RootState } from '../../../store/store';
+import { fetchOrders } from '../../../store/actions/admin';
 
-import Loader from '../../components/Loader/Loader';
-import Message from '../../components/Message/Message';
+import Loader from '../../../components/Loader/Loader';
+import Message from '../../../components/Message/Message';
 
 import { Table, Button } from 'react-bootstrap';
-import { FaCheck, FaTimes, FaEdit, FaTrash } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 
-interface UsersScreenProps extends RouteComponentProps {}
+interface OrdersScreenProps extends RouteComponentProps {}
 
-const UsersScreen: React.FC<UsersScreenProps> = ({ history }) => {
+const OrdersScreen: React.FC<OrdersScreenProps> = ({ history }) => {
   const dispatch = useDispatch();
   const adminState = useSelector((state: RootState) => state.admin);
-  const { users, loading, error } = adminState;
+  const { orders, loading, error } = adminState;
   const userState = useSelector((state: RootState) => state.user);
   const { user } = userState;
 
-  const deleteUserHandler = (userId: string) => {
-    if (window.confirm('Are you sure you want to remove this user?')) {
-      dispatch(deleteUser(userId));
-    }
-  };
-
   useEffect(() => {
     if (user && user.isAdmin) {
-      dispatch(fetchUsers());
+      dispatch(fetchOrders());
     } else {
       history.push('/signin');
     }
   }, [dispatch, history, user]);
   return (
     <>
-      <h1>Users</h1>
+      <h1>Orders</h1>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -53,39 +47,41 @@ const UsersScreen: React.FC<UsersScreenProps> = ({ history }) => {
           <thead>
             <tr>
               <th>ID</th>
-              <th>NAME</th>
-              <th>EMAIL</th>
-              <th>ADMIN</th>
+              <th>USER</th>
+              <th>DATE</th>
+              <th>TOTAL</th>
+              <th>PAID</th>
+              <th>DELIVERED</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
-              <tr key={user._id}>
-                <td>{user._id}</td>
-                <td>{user.name}</td>
+            {orders.map((order) => (
+              <tr key={order._id}>
+                <td>{order._id}</td>
+                <td>{typeof order.user !== 'string' && order.user.name}</td>
+                <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                <td>${order.totalPrice.toFixed(2)}</td>
                 <td>
-                  <a href={`mailto:${user.email}`}>{user.email}</a>
-                </td>
-                <td>
-                  {user.isAdmin ? (
-                    <FaCheck color="green" />
+                  {order.isPaid ? (
+                    new Date(order.paidOn!).toLocaleDateString()
                   ) : (
                     <FaTimes color="red" />
                   )}
                 </td>
                 <td>
-                  <LinkContainer to={`/admin/user/${user._id}`}>
+                  {order.isDelivered ? (
+                    new Date(order.deliveredOn!).toLocaleDateString()
+                  ) : (
+                    <FaTimes color="red" />
+                  )}
+                </td>
+                <td>
+                  <LinkContainer to={`/admin/order/${order._id}`}>
                     <Button variant="light" className="btn-sm mr-2">
-                      <FaEdit />
+                      Details
                     </Button>
                   </LinkContainer>
-                  <Button
-                    variant="danger"
-                    className="btn-sm"
-                    onClick={() => deleteUserHandler(user._id)}>
-                    <FaTrash />
-                  </Button>
                 </td>
               </tr>
             ))}
@@ -96,4 +92,4 @@ const UsersScreen: React.FC<UsersScreenProps> = ({ history }) => {
   );
 };
 
-export default UsersScreen;
+export default OrdersScreen;

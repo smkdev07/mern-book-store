@@ -8,6 +8,7 @@ import { PayPalButton } from 'react-paypal-button-v2'; // https://www.npmjs.com/
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { getOrderById, updateOrderByIdToPaid } from '../../store/actions/order';
+import { updateOrderByIdToDelivered } from '../../store/actions/admin';
 import { User } from '../../models/order';
 
 import Loader from '../../components/Loader/Loader';
@@ -37,11 +38,15 @@ interface MatchParams {
 
 interface OrderScreenProps extends RouteComponentProps<MatchParams> {}
 
-const OrderScreen: React.FC<OrderScreenProps> = ({ match }) => {
+const OrderScreen: React.FC<OrderScreenProps> = ({ match, history }) => {
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const dispatch = useDispatch();
   const orderState = useSelector((state: RootState) => state.order);
   const { order, loading, error } = orderState;
+  const userState = useSelector((state: RootState) => state.user);
+  const { user } = userState;
+  const adminState = useSelector((state: RootState) => state.admin);
+  const { loading: adminLoading, error: adminError, redirect } = adminState;
   const orderId = match.params.id;
 
   const addPayPalScript = useCallback(async () => {
@@ -60,6 +65,10 @@ const OrderScreen: React.FC<OrderScreenProps> = ({ match }) => {
     dispatch(updateOrderByIdToPaid(orderId, paymentResult));
   };
 
+  const deliverHandler = () => {
+    dispatch(updateOrderByIdToDelivered(orderId));
+  };
+
   useEffect(() => {
     if ((window as any).paypal) {
       setScriptLoaded(true);
@@ -69,8 +78,12 @@ const OrderScreen: React.FC<OrderScreenProps> = ({ match }) => {
   }, [addPayPalScript]);
 
   useEffect(() => {
-    dispatch(getOrderById(orderId));
-  }, [dispatch, orderId]);
+    if (user) {
+      dispatch(getOrderById(orderId));
+    } else {
+      history.push('/signin');
+    }
+  }, [dispatch, history, user, orderId, redirect]);
 
   return loading ? (
     <Loader />
@@ -195,6 +208,18 @@ const OrderScreen: React.FC<OrderScreenProps> = ({ match }) => {
                   ) : (
                     <Loader />
                   )}
+                </ListGroup.Item>
+              )}
+              {adminLoading && <Loader />}
+              {adminError && <Message variant="danger">{adminError}</Message>}
+              {user?.isAdmin && order?.isPaid && !order.isDelivered && (
+                <ListGroup.Item>
+                  <Button
+                    type="button"
+                    className="btn btn-block"
+                    onClick={deliverHandler}>
+                    Mark As Delivered
+                  </Button>
                 </ListGroup.Item>
               )}
             </ListGroup>

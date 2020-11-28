@@ -162,7 +162,7 @@ export const updateUserById = asyncHandler(async (req, res, next) => {
 // @description Delete user by id
 // @route DELETE /api/users/:id
 // @access Private/Admin
-export const deleteUser = asyncHandler(async (req, res, next) => {
+export const deleteUserById = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.params.id);
 
   if (user) {

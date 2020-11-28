@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import { fetchUser, updateUser } from '../../store/actions/admin';
+import { RootState } from '../../../store/store';
+import { fetchUser, updateUser } from '../../../store/actions/admin';
 
-import FormContainer from '../../components/FormContainer/FormContainer';
-import Loader from '../../components/Loader/Loader';
-import Message from '../../components/Message/Message';
+import FormContainer from '../../../components/FormContainer/FormContainer';
+import Loader from '../../../components/Loader/Loader';
+import Message from '../../../components/Message/Message';
 
 import { Button, Form } from 'react-bootstrap';
 

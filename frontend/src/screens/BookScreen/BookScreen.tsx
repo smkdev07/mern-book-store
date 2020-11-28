@@ -53,21 +53,21 @@ const BookScreen: React.FC<BookScreenProps> = ({ history, match }) => {
       ) : (
         <Row>
           <Col md={3}>
-            <Image src={book.image} alt={book.name} fluid />
+            <Image src={book?.image} alt={book?.name} fluid />
           </Col>
           <Col md={6}>
             <ListGroup variant="flush">
               <ListGroup.Item>
-                <h3>{book.name}</h3>
+                <h3>{book?.name}</h3>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Rating
-                  value={book.rating}
-                  text={`${book.numReviews} reviews`}
+                  value={book ? book.rating : 0}
+                  text={`${book?.numReviews} reviews`}
                 />
               </ListGroup.Item>
-              <ListGroup.Item>Price: ${book.price}</ListGroup.Item>
-              <ListGroup.Item>Description: {book.description}</ListGroup.Item>
+              <ListGroup.Item>Price: ${book?.price}</ListGroup.Item>
+              <ListGroup.Item>Description: {book?.description}</ListGroup.Item>
             </ListGroup>
           </Col>
           <Col md={3}>
@@ -77,7 +77,7 @@ const BookScreen: React.FC<BookScreenProps> = ({ history, match }) => {
                   <Row>
                     <Col>Price:</Col>
                     <Col>
-                      <strong>${book.price}</strong>
+                      <strong>${book?.price}</strong>
                     </Col>
                   </Row>
                 </ListGroup.Item>
@@ -85,11 +85,15 @@ const BookScreen: React.FC<BookScreenProps> = ({ history, match }) => {
                   <Row>
                     <Col>Status:</Col>
                     <Col>
-                      {book.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
+                      {book
+                        ? book.countInStock > 0
+                          ? 'In Stock'
+                          : 'Out Of Stock'
+                        : null}
                     </Col>
                   </Row>
                 </ListGroup.Item>
-                {book.countInStock > 0 && (
+                {book && book.countInStock > 0 && (
                   <ListGroup.Item>
                     <Row>
                       <Col>Quantity</Col>
@@ -119,7 +123,7 @@ const BookScreen: React.FC<BookScreenProps> = ({ history, match }) => {
                   <Button
                     className="btn-block"
                     type="button"
-                    disabled={book.countInStock === 0}
+                    disabled={book?.countInStock === 0}
                     onClick={addToCartHandler}>
                     Add To Cart
                   </Button>

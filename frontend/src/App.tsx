@@ -12,8 +12,11 @@ import OrderScreen from './screens/OrderScreen/OrderScreen';
 import SignInScreen from './screens/SignInScreen/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen/SignUpScreen';
 import UserProfileScreen from './screens/UserProfileScreen/UserProfileScreen';
-import UsersScreen from './screens/UsersScreen/UsersScreen';
-import UserScreen from './screens/UserScreen/UserScreen';
+import AdminUsersScreen from './screens/Admin/UsersScreen/UsersScreen';
+import AdminUserScreen from './screens/Admin/UserScreen/UserScreen';
+import AdminBooksScreen from './screens/Admin/BooksScreen/BooksScreen';
+import AdminBookScreen from './screens/Admin/BookScreen/BookScreen';
+import AdminOrdersScreen from './screens/Admin/OrdersScreen/OrdersScreen';
 import Footer from './components/Footer/Footer';
 
 import { Container } from 'react-bootstrap';
@@ -33,8 +36,12 @@ const App: React.FC = () => (
         <Route path="/signin" component={SignInScreen} />
         <Route path="/signup" component={SignUpScreen} />
         <Route path="/userprofile" component={UserProfileScreen} />
-        <Route path="/admin/users" component={UsersScreen} />
-        <Route path="/admin/user/:id" component={UserScreen} />
+        <Route path="/admin/users" component={AdminUsersScreen} />
+        <Route path="/admin/user/:id" component={AdminUserScreen} />
+        <Route path="/admin/books" component={AdminBooksScreen} />
+        <Route path="/admin/book/:id" component={AdminBookScreen} />
+        <Route path="/admin/orders" component={AdminOrdersScreen} />
+        <Route path="/admin/order/:id" component={OrderScreen} />
         <Route path="/" component={HomeScreen} exact />
       </Container>
     </main>
