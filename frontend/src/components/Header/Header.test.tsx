@@ -15,6 +15,12 @@ describe('<Header />', () => {
     expect(header).toHaveLength(1);
   });
 
+  it('renders the <Header /> component with the <SearchBox /> component', () => {
+    const wrapper = shallow(<Header />);
+    const searchBox = wrapper.find('SearchBox');
+    expect(searchBox).toHaveLength(1);
+  });
+
   it('renders the <Header /> component with Sign In NavLink when the user is not logged in', () => {
     const wrapper = shallow(<Header />);
     const navLink = wrapper.find('NavLink').last();

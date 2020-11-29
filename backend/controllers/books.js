@@ -6,7 +6,19 @@ import Book from '../models/book.js';
 // @route GET /api/books
 // @access Public
 export const getBooks = asyncHandler(async (req, res, next) => {
-  const books = await Book.find({});
+  const searchName = req.query.searchTerm
+    ? { name: { $regex: req.query.searchTerm, $options: 'i' } }
+    : {};
+  const searchAuthors = req.query.searchTerm
+    ? { authors: { $regex: req.query.searchTerm, $options: 'i' } }
+    : {};
+  const searchPublishers = req.query.searchTerm
+    ? { publishers: { $regex: req.query.searchTerm, $options: 'i' } }
+    : {};
+
+  const books = await Book.find({
+    $or: [{ ...searchName }, { ...searchAuthors }, { ...searchPublishers }],
+  });
 
   res.json(books);
 });

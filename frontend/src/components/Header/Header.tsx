@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { signOut } from '../../store/actions/user';
 
+import SearchBox from '../SearchBox/SearchBox';
+
 import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
 
@@ -26,6 +28,7 @@ const Header: React.FC = () => {
             <Navbar.Brand>Book Store</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <SearchBox />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
               <LinkContainer to="/cart">

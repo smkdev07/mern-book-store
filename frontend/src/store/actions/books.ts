@@ -9,16 +9,15 @@ import {
   REQUEST_BOOKS_FAILURE,
 } from './books-action-types';
 
-export const fetchBooks = (): ThunkAction<
-  void,
-  RootState,
-  unknown,
-  Action<string>
-> => async (dispatch) => {
+export const fetchBooks = (
+  searchTerm = ''
+): ThunkAction<void, RootState, unknown, Action<string>> => async (
+  dispatch
+) => {
   try {
     dispatch({ type: REQUEST_BOOKS });
 
-    const { data } = await axios.get('/api/books');
+    const { data } = await axios.get(`/api/books?searchTerm=${searchTerm}`);
 
     dispatch({ type: REQUEST_BOOKS_SUCCESS, payload: { books: data } });
   } catch (error) {

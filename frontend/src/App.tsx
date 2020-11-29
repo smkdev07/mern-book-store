@@ -42,6 +42,7 @@ const App: React.FC = () => (
         <Route path="/admin/book/:id" component={AdminBookScreen} />
         <Route path="/admin/orders" component={AdminOrdersScreen} />
         <Route path="/admin/order/:id" component={OrderScreen} />
+        <Route path="/search/:searchTerm" component={HomeScreen} />
         <Route path="/" component={HomeScreen} exact />
       </Container>
     </main>

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
@@ -10,14 +11,21 @@ import Message from '../../components/Message/Message';
 
 import { Row, Col } from 'react-bootstrap';
 
-const HomeScreen: React.FC = () => {
+interface MatchParams {
+  searchTerm: string;
+}
+
+interface HomeScreenProps extends RouteComponentProps<MatchParams> {}
+
+const HomeScreen: React.FC<HomeScreenProps> = ({ match }) => {
   const dispatch = useDispatch();
   const booksState = useSelector((state: RootState) => state.books);
   const { books, loading, error } = booksState;
+  const searchTerm = match.params.searchTerm;
 
   useEffect(() => {
-    dispatch(fetchBooks());
-  }, [dispatch]);
+    dispatch(fetchBooks(searchTerm));
+  }, [dispatch, searchTerm]);
 
   return (
     <>
