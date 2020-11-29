@@ -6,6 +6,7 @@ import {
   createBook,
   updateBookById,
   deleteBookById,
+  createBookReview,
 } from '../controllers/books.js';
 
 import { protect, isAdmin } from '../middleware/auth.js';
@@ -19,5 +20,7 @@ router
   .get(getBookById)
   .delete(protect, isAdmin, deleteBookById)
   .put(protect, isAdmin, updateBookById);
+
+router.route('/:id/review').post(protect, createBookReview);
 
 export default router;

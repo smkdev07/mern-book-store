@@ -160,6 +160,8 @@ export const updatetUserProfile = (
     const { data } = await axios(options);
 
     dispatch({ type: REQUEST_USER_PROFILE_SUCCESS, payload: { user: data } });
+
+    localStorage.setItem('user', JSON.stringify(data));
   } catch (error) {
     const message =
       error.response && error.response.data.message

@@ -1,8 +1,9 @@
-// type validation required
 export interface Review {
+  _id: string;
   name: string;
-  rating: string;
+  rating: number;
   comment: string;
+  user: string;
   createdAt: string;
   updatedAt: string;
 }

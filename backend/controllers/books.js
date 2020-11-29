@@ -83,3 +83,41 @@ export const deleteBookById = asyncHandler(async (req, res, next) => {
     throw new Error('Book not found');
   }
 });
+
+// @description Create new review
+// @route POST /api/books/:id/review
+// @access Private
+export const createBookReview = asyncHandler(async (req, res, next) => {
+  const book = await Book.findById(req.params.id);
+
+  if (book) {
+    const alreadyReviewed = book.reviews.find(
+      (review) => review.user.toString() === req.user._id.toString()
+    );
+
+    if (alreadyReviewed) {
+      res.status(400);
+      throw new Error('Book already reviewed');
+    } else {
+      const review = {
+        name: req.user.name,
+        rating: req.body.rating,
+        comment: req.body.comment,
+        user: req.user._id,
+      };
+
+      book.reviews.push(review);
+      book.numReviews = book.reviews.length;
+      book.rating =
+        book.reviews.reduce((total, review) => total + review.rating, 0) /
+        book.reviews.length;
+
+      await book.save();
+      res.status(201);
+      res.json({ message: 'Review added' });
+    }
+  } else {
+    res.status(404);
+    throw new Error('Book not found');
+  }
+});
