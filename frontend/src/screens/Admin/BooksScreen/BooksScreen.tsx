@@ -10,18 +10,23 @@ import { createBook, deleteBook } from '../../../store/actions/admin';
 import { REQUEST_BOOK_RESET } from '../../../store/actions/admin-action-types';
 import { REQUEST_BOOK_RESET as BOOK_RESET } from '../../../store/actions/book-action-types';
 
+import Paginate from '../../../components/Paginate/Paginate';
 import Loader from '../../../components/Loader/Loader';
 import Message from '../../../components/Message/Message';
 
 import { Row, Col, Table, Button } from 'react-bootstrap';
 import { FaPlus, FaEdit, FaTrash } from 'react-icons/fa';
 
-interface BooksScreenProps extends RouteComponentProps {}
+interface MatchParams {
+  pageNumber: string;
+}
 
-const BooksScreen: React.FC<BooksScreenProps> = ({ history }) => {
+interface BooksScreenProps extends RouteComponentProps<MatchParams> {}
+
+const BooksScreen: React.FC<BooksScreenProps> = ({ history, match }) => {
   const dispatch = useDispatch();
   const booksState = useSelector((state: RootState) => state.books);
-  const { books, loading, error } = booksState;
+  const { page, pages, books, loading, error } = booksState;
   const adminState = useSelector((state: RootState) => state.admin);
   const {
     book: adminBook,
@@ -31,6 +36,7 @@ const BooksScreen: React.FC<BooksScreenProps> = ({ history }) => {
   } = adminState;
   const userState = useSelector((state: RootState) => state.user);
   const { user } = userState;
+  const pageNumber = +match.params.pageNumber || 1;
 
   const createBookHandler = () => {
     dispatch(createBook());
@@ -46,13 +52,13 @@ const BooksScreen: React.FC<BooksScreenProps> = ({ history }) => {
     if (adminBook) {
       history.push(`/admin/book/${adminBook._id}`);
     } else if (user && user.isAdmin) {
-      dispatch(fetchBooks());
+      dispatch(fetchBooks('', pageNumber));
     } else {
       history.push('/signin');
     }
     dispatch({ type: REQUEST_BOOK_RESET });
     dispatch({ type: BOOK_RESET });
-  }, [dispatch, history, user, adminBook, redirect]);
+  }, [dispatch, history, user, adminBook, redirect, pageNumber]);
   return (
     <>
       <Row className="align-items-center">
@@ -73,48 +79,51 @@ const BooksScreen: React.FC<BooksScreenProps> = ({ history }) => {
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <Table
-          striped
-          bordered
-          hover
-          responsive
-          variant="dark"
-          className="table-sm text-center">
-          <thead>
-            <tr>
-              {/* <th>ID</th> */}
-              <th>NAME</th>
-              <th>PRICE</th>
-              <th>AUTHORS</th>
-              <th>PUBLISHERS</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {books.map((book) => (
-              <tr key={book._id}>
-                {/* <td>{book._id}</td> */}
-                <td>{book.name}</td>
-                <td>${book.price}</td>
-                <td>{book.authors}</td>
-                <td>{book.publishers}</td>
-                <td>
-                  <LinkContainer to={`/admin/book/${book._id}`}>
-                    <Button variant="light" className="btn-sm mr-2">
-                      <FaEdit />
-                    </Button>
-                  </LinkContainer>
-                  <Button
-                    variant="danger"
-                    className="btn-sm"
-                    onClick={() => deleteBookHandler(book._id)}>
-                    <FaTrash />
-                  </Button>
-                </td>
+        <>
+          <Table
+            striped
+            bordered
+            hover
+            responsive
+            variant="dark"
+            className="table-sm text-center">
+            <thead>
+              <tr>
+                {/* <th>ID</th> */}
+                <th>NAME</th>
+                <th>PRICE</th>
+                <th>AUTHORS</th>
+                <th>PUBLISHERS</th>
+                <th></th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {books.map((book) => (
+                <tr key={book._id}>
+                  {/* <td>{book._id}</td> */}
+                  <td>{book.name}</td>
+                  <td>${book.price}</td>
+                  <td>{book.authors}</td>
+                  <td>{book.publishers}</td>
+                  <td>
+                    <LinkContainer to={`/admin/book/${book._id}`}>
+                      <Button variant="light" className="btn-sm mr-2">
+                        <FaEdit />
+                      </Button>
+                    </LinkContainer>
+                    <Button
+                      variant="danger"
+                      className="btn-sm"
+                      onClick={() => deleteBookHandler(book._id)}>
+                      <FaTrash />
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+          <Paginate page={page} pages={pages} isAdmin />
+        </>
       )}
     </>
   );

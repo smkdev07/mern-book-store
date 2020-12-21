@@ -30,22 +30,42 @@ const mockReturnedErrorMessage = 'Test Error Message';
 
 describe('books reducer', () => {
   it('returns updated books state for action type REQUEST_BOOKS', () => {
-    const initialBooksState = { books: [], loading: false, error: null };
+    const initialBooksState = {
+      page: 0,
+      pages: 0,
+      books: [],
+      loading: false,
+      error: null,
+    };
     const updatedBooksState = booksReducer(initialBooksState, {
       type: REQUEST_BOOKS,
     });
-    const expectedBooksState = { books: [], loading: true, error: null };
+    const expectedBooksState = {
+      page: 0,
+      pages: 0,
+      books: [],
+      loading: true,
+      error: null,
+    };
 
     expect(updatedBooksState).toEqual(expectedBooksState);
   });
 
   it('returns updated books state for action type REQUEST_BOOKS_SUCCESS', () => {
-    const initialBooksState = { books: [], loading: true, error: null };
+    const initialBooksState = {
+      page: 0,
+      pages: 0,
+      books: [],
+      loading: true,
+      error: null,
+    };
     const updatedBooksState = booksReducer(initialBooksState, {
       type: REQUEST_BOOKS_SUCCESS,
-      payload: { books: mockReturnedBooks },
+      payload: { page: 1, pages: 1, books: mockReturnedBooks },
     });
     const expectedBooksState = {
+      page: 1,
+      pages: 1,
       books: mockReturnedBooks,
       loading: false,
       error: null,
@@ -55,12 +75,20 @@ describe('books reducer', () => {
   });
 
   it('returns updated books state for action type REQUEST_BOOKS_FAILURE', () => {
-    const initialBooksState = { books: [], loading: true, error: null };
+    const initialBooksState = {
+      page: 0,
+      pages: 0,
+      books: [],
+      loading: true,
+      error: null,
+    };
     const updatedBooksState = booksReducer(initialBooksState, {
       type: REQUEST_BOOKS_FAILURE,
       payload: { message: mockReturnedErrorMessage },
     });
     const expectedBooksState = {
+      page: 0,
+      pages: 0,
       books: [],
       loading: false,
       error: mockReturnedErrorMessage,

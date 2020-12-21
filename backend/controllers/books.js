@@ -6,6 +6,9 @@ import Book from '../models/book.js';
 // @route GET /api/books
 // @access Public
 export const getBooks = asyncHandler(async (req, res, next) => {
+  const page = +req.query.page || 1;
+  const limit = +req.query.limit || 10;
+
   const searchName = req.query.searchTerm
     ? { name: { $regex: req.query.searchTerm, $options: 'i' } }
     : {};
@@ -16,11 +19,17 @@ export const getBooks = asyncHandler(async (req, res, next) => {
     ? { publishers: { $regex: req.query.searchTerm, $options: 'i' } }
     : {};
 
-  const books = await Book.find({
+  const count = await Book.countDocuments({
     $or: [{ ...searchName }, { ...searchAuthors }, { ...searchPublishers }],
   });
 
-  res.json(books);
+  const books = await Book.find({
+    $or: [{ ...searchName }, { ...searchAuthors }, { ...searchPublishers }],
+  })
+    .limit(limit)
+    .skip(limit * (page - 1));
+
+  res.json({ page, pages: Math.ceil(count / limit), books });
 });
 
 // @description Fetch book by id

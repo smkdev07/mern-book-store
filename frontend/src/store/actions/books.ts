@@ -10,16 +10,23 @@ import {
 } from './books-action-types';
 
 export const fetchBooks = (
-  searchTerm = ''
+  searchTerm = '',
+  page = 1,
+  limit = 10
 ): ThunkAction<void, RootState, unknown, Action<string>> => async (
   dispatch
 ) => {
   try {
     dispatch({ type: REQUEST_BOOKS });
 
-    const { data } = await axios.get(`/api/books?searchTerm=${searchTerm}`);
+    const { data } = await axios.get(
+      `/api/books?searchTerm=${searchTerm}&page=${page}&limit=${limit}`
+    );
 
-    dispatch({ type: REQUEST_BOOKS_SUCCESS, payload: { books: data } });
+    dispatch({
+      type: REQUEST_BOOKS_SUCCESS,
+      payload: { page: data.page, pages: data.pages, books: data.books },
+    });
   } catch (error) {
     const message =
       error.response && error.response.data.message

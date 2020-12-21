@@ -10,7 +10,7 @@ export interface RequestBooksAction {
 
 export interface RequestBooksSuccessAction {
   type: typeof REQUEST_BOOKS_SUCCESS;
-  payload: { books: Book[] };
+  payload: { page: number, pages: number, books: Book[] };
 }
 
 export interface RequestBooksFailureAction {

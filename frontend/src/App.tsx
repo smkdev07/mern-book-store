@@ -38,11 +38,22 @@ const App: React.FC = () => (
         <Route path="/userprofile" component={UserProfileScreen} />
         <Route path="/admin/users" component={AdminUsersScreen} />
         <Route path="/admin/user/:id" component={AdminUserScreen} />
-        <Route path="/admin/books" component={AdminBooksScreen} />
+        <Route path="/admin/books" component={AdminBooksScreen} exact />
+        <Route
+          path="/admin/books/page/:pageNumber"
+          component={AdminBooksScreen}
+          exact
+        />
         <Route path="/admin/book/:id" component={AdminBookScreen} />
         <Route path="/admin/orders" component={AdminOrdersScreen} />
         <Route path="/admin/order/:id" component={OrderScreen} />
-        <Route path="/search/:searchTerm" component={HomeScreen} />
+        <Route path="/search/:searchTerm" component={HomeScreen} exact />
+        <Route
+          path="/search/:searchTerm/page/:pageNumber"
+          component={HomeScreen}
+          exact
+        />
+        <Route path="/page/:pageNumber" component={HomeScreen} exact />
         <Route path="/" component={HomeScreen} exact />
       </Container>
     </main>
