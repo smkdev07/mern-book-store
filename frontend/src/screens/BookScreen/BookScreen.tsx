@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { fetchBook, createBookReview } from '../../store/actions/book';
 
+import Meta from '../../components/Meta/Meta';
 import Rating from '../../components/Rating/Rating';
 import Loader from '../../components/Loader/Loader';
 import Message from '../../components/Message/Message';
@@ -71,6 +72,7 @@ const BookScreen: React.FC<BookScreenProps> = ({ history, match }) => {
         <Message variant="danger">{error}</Message>
       ) : (
         <>
+          <Meta title={book?.name} />
           <Row>
             <Col md={3}>
               <Image src={book?.image} alt={book?.name} fluid />

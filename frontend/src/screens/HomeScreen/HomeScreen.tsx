@@ -6,6 +6,7 @@ import { RootState } from '../../store/store';
 import { fetchBooks } from '../../store/actions/books';
 
 import Book from '../../components/Book/Book';
+import Meta from '../../components/Meta/Meta';
 import BookCarousel from '../../components/BookCarousel/BookCarousel';
 import Paginate from '../../components/Paginate/Paginate';
 import Loader from '../../components/Loader/Loader';
@@ -33,6 +34,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ match }) => {
 
   return (
     <>
+      <Meta />
       {!searchTerm && books.length > 0 && <BookCarousel books={books} />}
       {searchTerm && (
         <Link className="btn btn-light my-3" to="/">
