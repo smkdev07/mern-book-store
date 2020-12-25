@@ -14,6 +14,8 @@ const SearchBox: React.FC = () => {
     } else {
       history.push('/');
     }
+
+    setSearchTerm('');
   };
 
   return (
